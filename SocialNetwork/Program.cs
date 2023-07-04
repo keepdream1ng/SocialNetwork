@@ -24,13 +24,17 @@ namespace SocialNetwork
                 .ConfigureServices((context, services) =>
                 {
                     services.AddSingleton<IUserRepository, UserRepository>();
+                    services.AddSingleton<IMessageRepository, MessageRepository>();
                     services.AddSingleton<IRegistrationService, UserService>();
                     services.AddSingleton<IUserAuthenticationService, UserService>();
                     services.AddSingleton<IUserUpdaterService, UserService>();
+                    services.AddSingleton<IMessageService, MessageService>();
                     services.AddSingleton<RegistrationView>();
                     services.AddSingleton<UserAuthentificationView>();
                     services.AddSingleton<UserDataUpdateView>();
                     services.AddSingleton<ProfileInfoView>();
+                    services.AddSingleton<NewMessageView>();
+                    services.AddSingleton<UserIncomingMessageView>();
                     services.AddSingleton<UserMenuView>();
                     services.AddSingleton<EnterView>();
                     services.AddSingleton<IUI, UI>();
