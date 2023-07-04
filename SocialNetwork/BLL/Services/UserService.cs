@@ -11,7 +11,7 @@ using SocialNetwork.BLL.Models;
 
 namespace SocialNetwork.BLL.Services
 {
-    public class UserService
+    public class UserService : IUserAuthenticationService, IRegistrationService, IUserUpdaterService
     {
         private readonly IUserRepository _userRepository;
 
