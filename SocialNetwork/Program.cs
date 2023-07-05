@@ -23,21 +23,25 @@ namespace SocialNetwork
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
+                    // Data access level.
                     services.AddSingleton<IUserRepository, UserRepository>();
                     services.AddSingleton<IMessageRepository, MessageRepository>();
+                    services.AddSingleton<IFriendRepository, FriendRepository>();
+                    // Bisiness logic level.
                     services.AddSingleton<IRegistrationService, UserService>();
                     services.AddSingleton<IUserAuthenticationService, UserService>();
                     services.AddSingleton<IUserUpdaterService, UserService>();
                     services.AddSingleton<IMessageService, MessageService>();
-                    services.AddSingleton<RegistrationView>();
-                    services.AddSingleton<UserAuthentificationView>();
-                    services.AddSingleton<UserDataUpdateView>();
-                    services.AddSingleton<ProfileInfoView>();
-                    services.AddSingleton<NewMessageView>();
-                    services.AddSingleton<UserIncomingMessageView>();
-                    services.AddSingleton<UserMenuView>();
-                    services.AddSingleton<EnterView>();
-                    services.AddSingleton<IUI, UI>();
+                    // Presentation logic level.
+                    services.AddScoped<RegistrationView>();
+                    services.AddScoped<UserAuthentificationView>();
+                    services.AddScoped<UserDataUpdateView>();
+                    services.AddScoped<ProfileInfoView>();
+                    services.AddScoped<NewMessageView>();
+                    services.AddScoped<UserIncomingMessageView>();
+                    services.AddScoped<UserMenuView>();
+                    services.AddScoped<EnterView>();
+                    services.AddScoped<IUI, UI>();
                 });
         }
     }

@@ -9,7 +9,7 @@ namespace SocialNetwork.PLL.Views
 {
     public class ProfileInfoView
     {
-        public void Show(User user)
+        public void Show(IUser user)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("User profile info");
