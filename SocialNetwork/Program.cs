@@ -32,6 +32,7 @@ namespace SocialNetwork
                     services.AddSingleton<IUserAuthenticationService, UserService>();
                     services.AddSingleton<IUserUpdaterService, UserService>();
                     services.AddSingleton<IMessageService, MessageService>();
+                    services.AddSingleton<IFriendsService, FriendsService>();
                     // Presentation logic level.
                     services.AddScoped<RegistrationView>();
                     services.AddScoped<UserAuthentificationView>();
@@ -39,6 +40,8 @@ namespace SocialNetwork
                     services.AddScoped<ProfileInfoView>();
                     services.AddScoped<NewMessageView>();
                     services.AddScoped<UserIncomingMessageView>();
+                    services.AddScoped<FriendView>();
+                    services.AddScoped<FriendsListView>();
                     services.AddScoped<UserMenuView>();
                     services.AddScoped<EnterView>();
                     services.AddScoped<IUI, UI>();

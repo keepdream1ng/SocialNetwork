@@ -19,13 +19,12 @@ namespace SocialNetwork.PLL.Views
             _messageService = messageService;
         }
 
-        public void Show(User user)
+        public void Show(IUser user, string recipientEmail)
         {
             var messageData = new MessageGenerationData();
             messageData.SenderId = user.Id;
 
-            Console.Write("Enter recipient email: ");
-            messageData.RecipientEmail = Console.ReadLine();
+            messageData.RecipientEmail = recipientEmail;
 
             Console.Write("Enter message content: ");
             messageData.Content = Console.ReadLine();
@@ -51,6 +50,13 @@ namespace SocialNetwork.PLL.Views
             {
                 AlertMessage.Show($"Error occured: {ex.Message}");
             }
+        }
+        public void Show(IUser user)
+        {
+            Console.Write("Enter recipient email: ");
+            string recipientEmail = Console.ReadLine();
+
+            Show(user, recipientEmail);
         }
     }
 }

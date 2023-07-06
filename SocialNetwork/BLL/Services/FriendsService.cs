@@ -10,18 +10,21 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.BLL.Services
 {
-    public class FriendsService
+    public class FriendsService : IFriendsService
     {
         private readonly IFriendRepository _friendRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IUserAuthenticationService _userAuthenticationService;
 
         public FriendsService(
             IFriendRepository friendRepository,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IUserAuthenticationService userAuthenticationService
             )
         {
             _friendRepository = friendRepository;
             _userRepository = userRepository;
+            _userAuthenticationService = userAuthenticationService;
         }
 
         public void AddToFriends(FriendGenerationData friendGenerationData)
@@ -46,23 +49,27 @@ namespace SocialNetwork.BLL.Services
 
         public List<IUser> GetFriendsList(IUser user)
         {
-            List<IUser> friendsList = new();
-            friendsList.AddRange(
-                _friendRepository.FindAllByUserId(user.Id)
+            List<IUser> friendsList = _friendRepository.FindAllByUserId(user.Id)
                     .Select(friendEntity => _userRepository.FindById(friendEntity.friend_id))
                     .Select(userEntity => ConstructIUserModel(userEntity))
-                );
+                    .ToList();
             return friendsList;
         }
 
-        //public void RemoveFromFriendsList(IUser user, IUser friend)
-        //{
-
-        //}
+        public void RemoveFromFriendsList(IUser user, IUser unfriendedUser)
+        {
+            FriendEntity friendsRecord = _friendRepository.FindAllByUserId(user.Id)
+                .Where(friendEntity => friendEntity.friend_id == unfriendedUser.Id)
+                .FirstOrDefault();
+            if (_friendRepository.Delete(friendsRecord.id) == 0)
+            {
+                throw new Exception("Removing from friends failed");
+            }
+        }
 
         private IUser ConstructIUserModel(UserEntity user)
         {
-            return _userRepository.FindByEmail(user.email) as IUser;
+            return _userAuthenticationService.FindByEmail(user.email);
         }
     }
 }

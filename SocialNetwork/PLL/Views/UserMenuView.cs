@@ -14,26 +14,23 @@ namespace SocialNetwork.PLL.Views
         private readonly ProfileInfoView _profileInfoView;
         private readonly UserDataUpdateView _userDataUpdateView;
         private readonly UserIncomingMessageView _userIncomingMessageView;
+        private readonly FriendsListView _friendsListView;
         private readonly NewMessageView _newMessageView;
-        private User User { get; set; }
-        private List<Message> _incomingMessages
-        {
-            get
-            {
-                return _messageService.GetIncomingMessagesByRecipient(User.Id);
-            }
-        }
+        public User User { get; set; }
+        private List<Message> _incomingMessages => _messageService.GetIncomingMessagesByRecipient(User.Id);
 
         public UserMenuView(ProfileInfoView profileInfoView,
             UserDataUpdateView userDataUpdateView,
             IMessageService messageService,
             UserIncomingMessageView userIncomingMessageView,
+            FriendsListView friendsListView,
             NewMessageView newMessageView)
         {
             _profileInfoView = profileInfoView;
             _userDataUpdateView = userDataUpdateView;
             _messageService = messageService;
             _userIncomingMessageView = userIncomingMessageView;
+            _friendsListView = friendsListView;
             _newMessageView = newMessageView;
         }
         public void Show(User user)
@@ -45,7 +42,7 @@ namespace SocialNetwork.PLL.Views
 
                 Console.WriteLine("See your profile info (press 1)");
                 Console.WriteLine("Edit profile (press 2)");
-                Console.WriteLine("Add a friend (press 3)");
+                Console.WriteLine("Friends list (press 3)");
                 Console.WriteLine("Write a message (press 4)");
                 Console.WriteLine("See incoming messages (press 5)");
                 Console.WriteLine("Exit profile (press 6)");
@@ -64,7 +61,7 @@ namespace SocialNetwork.PLL.Views
                         }
                     case "3":
                         {
-                            throw new NotImplementedException();
+                            _friendsListView.Show(user);
                             break;
                         }
                     case "4":
