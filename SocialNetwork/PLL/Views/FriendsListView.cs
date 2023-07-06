@@ -33,7 +33,7 @@ namespace SocialNetwork.PLL.Views
             while (true)
             {
                 Console.WriteLine($"{_friendsList.Count} friend(s) in the list.");
-                Console.WriteLine("Add a new friend by its email (press 0)");
+                Console.WriteLine("Add a new friend by email (press 0)");
                 Console.WriteLine("Press any letter key to return");
                 if (_friendsList.Count > 0)
                 {

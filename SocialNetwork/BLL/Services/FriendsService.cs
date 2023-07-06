@@ -34,6 +34,10 @@ namespace SocialNetwork.BLL.Services
             {
                 throw new UserNotFoundException();
             }
+            if (IsInRepository(friendGenerationData))
+            {
+                throw new ArgumentException("Friend is already added", nameof(friendGenerationData.FriendEmail));
+            }
 
             var friendRecord = new FriendEntity()
             {
@@ -70,6 +74,16 @@ namespace SocialNetwork.BLL.Services
         private IUser ConstructIUserModel(UserEntity user)
         {
             return _userAuthenticationService.FindByEmail(user.email);
+        }
+
+        private bool IsInRepository(FriendGenerationData friendRecord)
+        {
+            var record = _friendRepository.FindAllByUserId(friendRecord.UserId)
+                .Select(friendEntity => _userRepository.FindById(friendEntity.friend_id))
+                .Where(userEntity => userEntity.email == friendRecord.FriendEmail)
+                .FirstOrDefault();
+
+            return (record is not null);
         }
     }
 }
